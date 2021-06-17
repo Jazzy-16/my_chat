@@ -1,16 +1,16 @@
 const express = require('express');
 const app = express();
 
-//Socket.io has to use the http server
+// for socket.io
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
-//Socket.io
+// Socket.io implementation
 io.on('connection', (socket) => {
-  console.log('New user connected!');
+    // this is read on any new socket connection
+    require('./sockets/chat.js')(io, socket);
 })
 
-//Express View Engine for Handlebars
 const exphbs  = require('express-handlebars');
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
